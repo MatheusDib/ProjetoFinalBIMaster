@@ -10,15 +10,15 @@ Trabalho apresentado ao curso [BI MASTER](https://ica.puc-rio.ai/bi-master) como
 
 ---
 
+
 ### Resumo
 
 A análise de séries temporais é fundamental para todas as empresas. Os departamentos de logísticas utilizam-se de técnicas para previsões de vendas afim de 
 atingir seus objetivos centrais de otimização de estoques. O presente estudo tem como objetivo colaborar com o avanço de técnicas para previsões de vendas em indústrias.
 Neste trabalho utilizou-se uma base de dados de uma industria de cosméticos do Brasil com dados desde 2017 de vendas na granularidade de produto e mês.
-A base de dados foi separada em quatro dataframes diferentes (clusters) baseando-se em similiaridade dos produtos de mesmas categorias com alta correlação. Em seguida, 
+A base de dados foi separada em quatro dataframes diferentes (clusters) baseando-se em similaridade dos produtos de mesmas categorias com alta correlação. Em seguida, 
 criaram-se as features nos dataframes para futura entrada nos modelos preditivos. O modelo de machine learning escolhido para previsão foi o Catboost. O modelo obteve resultados 
 melhores que os balizadores propostos para os clusters 2, 3 e 4 e resultado inferior para o cluster 1.
-
 
 
 ### 1. Introdução
@@ -28,18 +28,18 @@ Tal tema possui tamanha importância, que é comum encontrar áreas e departamen
 O estudo das séries temporais ajuda a empresa a entender comportamentos passados de seus consumidores, verificar elasticidades de sua demanda
 e até mesmo projetar demandas futuras para seus produtos.
 
-Quando estas análises são realizadas, empresas conseguem entender quais investimentos passados tiveram êxíto comercial, quais campanhas publicitárias foram eficientes, 
+Quando estas análises são realizadas, empresas conseguem entender quais investimentos passados tiveram êxito comercial, quais campanhas publicitárias foram eficientes, 
 em que momento erraram na estratégia, e até mesmo ajustar planos de produções para se tornarem condizentes com as necessidades de curto a longo prazo.
 
-Departamentos de logística comumente são protagonistas em tal tema dentro das companhias. Isto porque a lógistica tem como um de seus principais objetivos 
+Departamentos de logística comumente são protagonistas em tal tema dentro das companhias. Isto porque a logística tem como um de seus principais objetivos 
 a otimização de estoques, ou seja, evitar excessos e rupturas. O excesso de estoque é ruim para uma indústria, pois estoque é um capital da empresa, e as companhias querem
-sempre maximizar o retorno de capital empregado. Ter um grande volume de estoques parados é uma alocação ineficiênte que poderá acarretar em prejuízos financeiros.
+sempre maximizar o retorno de capital empregado. Ter um grande volume de estoques parados é uma alocação ineficiente que poderá acarretar em prejuízos financeiros.
 Por outro lado, as rupturas, são quando os estoques não são suficientes para suprir uma demanda existente no momento, fazendo com que a empresa perca uma venda. 
 Também levando a um prejuizo financeiro.
 
 Visto este objetivo central da logística, a previsão de séries temporais se torna uma ferramenta crucial para alcançar tais metas.
  
-O presente estudo visa utilizar um modelo de machine learning em conjunto com os dados das séries temporais de uma idustria de cométicos do Brasil 
+O presente estudo visa utilizar um modelo de machine learning sustentado pelos dados das séries temporais de uma industria de cosméticos do Brasil 
 para prever o ponto seguinte da série.
 O modelo será abastecido com dados históricos de venda do país na granularidade de mês e produto.
 
@@ -57,11 +57,11 @@ De forma que temos o seguinte cenário:
 * CLUSTER 3: produtos das categorias 'Acne Tratamento', 'Limpeza Corpo' e 'Rosto Outros';
 * CLUSTER 4: todos os demais produtos que não estão nos clusters acima.
 
-Além disso, foram desconsiderados todos os produtos "Promo". Estes são os produtos promocionados em kit's que possuem dois ou mais produtos em um mesmo código. 
+Além disso, foram desconsiderados todos os produtos do tipo "Promo". Estes são produtos especiais vendidos em kit's que possuem dois ou mais produtos em um mesmo código. 
 Eles foram desconsiderados, pois suas vendas são realizadas de acordo com a diretriz da industria e não possuem relação direta com demanda dos consumidores.
 
-Realizada esta separação do dataframe foi realizada a criação das features que ajudarão o modelo de machine learning a encontrar padrões preditivos nas curvas.
-Serão as variáveis de entrada do modelo.
+Realizada esta separação do dataframe, foi realizada a criação das features que ajudarão o modelo de machine learning a encontrar padrões preditivos nas curvas. 
+Essas features serão as variáveis de entrada do modelo.
 
 Foram criadas as seguintes features em cada dataframe:
 
@@ -72,7 +72,7 @@ Foram criadas as seguintes features em cada dataframe:
 * Features categóricas (Marca, Código do produto e Categoria).
 
 O modelo de machine learning escolhido foi o CatBoost, que trata-se de um modelo de árvore de decisões com a técnica de gradiente boosting.
-Este modelo foi escolhido, pois consegue trabalhar de forma nativa com variáveis categórias, questão fundamental para o problema.
+Este modelo foi escolhido, pois consegue trabalhar de forma nativa com variáveis categóricas, questão fundamental para o problema.
 Os parâmetros definidos para o modelo foram os seguintes:
 
 * iterations = 1000;
@@ -88,15 +88,14 @@ Os parâmetros definidos para o modelo foram os seguintes:
 Dada a incerteza existente para afirmar se um modelo de previsão de vendas é satisfatório ou não, foram pensados dois balizadores para comparar os resultados.
 
 1. Assumisse como venda futura a mesma venda realizada no mês anterior e então verifica-se a acurácia.
-2. Obtem os números do processo de previsão de vendas atualmente implementado na companhia e então verifica-se a acurácia.
+2. Obtém os números do processo de previsão de vendas atualmente implementado na companhia e então verifica-se a acurácia.
 
 Com ambos os balizadores, tornou-se possível mensurar a diferença de acurácia entre os balizadores 1 e 2 versus os modelos de machine learning propostos neste estudo para prever a demanda do ponto seguinte.
 
 Como métrica de acurácia, escolheu-se o RMSE (Raiz do Erro Quadrático Médio). Quanto menor o RMSE, melhor a previsão.
 
 Dado que o modelo prevê somente um ponto a frente, o RMSE final foi formulado a partir da média dos últimos quatro RMSE de cada cluster.
-Dessa forma, tenta-se minimizar ocilações pontuais e testa-se de forma mais sólida 
-os modelos e técnicas empregadas para as previsões de vendas. 
+Dessa forma, tenta-se minimizar oscilações pontuais e testa-se de forma mais sólida os modelos e técnicas empregadas para as previsões de vendas. 
 
 Abaixo temos uma tabela resumo dos quatro clusters com seus resultados de RMSE finais.
 
@@ -107,18 +106,17 @@ Abaixo temos uma tabela resumo dos quatro clusters com seus resultados de RMSE f
 | Cluster 3 | 395 | 596 | 338 |
 | Cluster 4 | 714 | 609 | 593 |
 
+
 ### 4. Conclusões
 
 Analisando os resultados, verifica-se que o modelo proposto conseguiu atingir resultados melhores de RMSE para 
 os clusters 2, 3 e 4. Para o cluster 1 o modelo tem resultado inferior ao processo atual de previsão de vendas da empresa.
 
-Interessante analisar também, que para os clusters 2 e 3, a técnica de utilizar o periodo anterior como previsão se mostrou melhor que a atual previsão da empresa, e 
+Interessante analisar também, que para os clusters 2 e 3, a técnica de utilizar o período anterior como previsão se mostrou melhor que a atual previsão da empresa, e 
 com resultados bem próximos ao modelo do catboost.
 
 Como sugestão de trabalhos futuros novos modelos de machine learning poderiam ser usados para verificar suas acurácias e também novas features poderiam ser desenvolvidas 
 para incrementar os modelos preditivos.
-
-
 
 
 ---
