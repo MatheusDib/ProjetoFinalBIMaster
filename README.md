@@ -43,38 +43,67 @@ O modelo será abastecido com dados históricos de venda do país na granularida
 A base de dados deste trabalho contêm os dados históricos de venda desde janeiro de 2017 ao nível de granularidade de produto mês a mês.
 
 Inicialmente, como pré-processamento dos dados, foi realizada uma divisão desta base em quatro clusters que se tornarão quatro dataframes diferentes.
-Cada cluster separa um grupo de produtos de mesmas categorias que possuem alta correlação entre suas séries temporais.
+Cada cluster separa um grupo de produtos de mesmas categorias, que possuem alta correlação entre suas séries temporais.
 De forma que temos o seguinte cenário:
 
-* CLUSTER 1: produtos das categorias 'Solar Rosto' e 'Corpo Outros'
-* CLUSTER 2: produtos das categorias '
-* CLUSTER 3: produtos das categorias '
+* CLUSTER 1: produtos das categorias 'Solar Rosto' e 'Corpo Outros';
+* CLUSTER 2: produtos das categorias 'Acne Limpeza', 'Antirrugas Total', 'Capilar Total', 'Hidratação Corpo', 'Hidratação Rosto', 'Hidratação Outros' e 'Cicatrizante';
+* CLUSTER 3: produtos das categorias 'Acne Tratamento', 'Limpeza Corpo' e 'Rosto Outros';
 * CLUSTER 4: todos os demais produtos que não estão nos clusters acima.
 
 Além disso, foram desconsiderados todos os produtos "Promo". Estes são os produtos promocionados em kit's que possuem dois ou mais produtos em um mesmo código. 
 Eles foram desconsiderados, pois suas vendas são realizadas de acordo com a diretriz da industria e não possuem relação direta com demanda dos consumidores.
 
 Realizada esta separação do dataframe foi realizada a criação das features que ajudarão o modelo de machine learning a encontrar padrões preditivos nas curvas.
+Serão as variáveis de entrada do modelo.
+
 Foram criadas as seguintes features em cada dataframe:
 
-* LAG's de Vendas (M-1, M-2, M-3, ... , M-24)
-* Médias Móveis de Vendas (2, 3 e 6 meses)
-* Atributos temporais: mês e ano
-* Features categóricas (Marca, Código do produto, Categoria e Tipo)
+* LAG's de Vendas (M-1, M-2, M-3, ... , M-24);
+* Médias Móveis de Vendas (2, 3 e 6 meses);
+* Atributos temporais: mês e ano;
+* Diferenças entre LAG's;
+* Features categóricas (Marca, Código do produto e Categoria).
 
 O modelo de machine learning escolhido foi o CatBoost, que trata-se de um modelo de árvore de decisões com a técnica de gradiente boosting.
-Como parâmetros 
+Este modelo foi escolhido, pois consegue trabalhar de forma nativa com variáveis categórias, questão fundamental para o problema.
+Os parâmetros definidos para o modelo foram os seguintes:
+
+* iterations = 1000;
+* depth = 5;
+* learning_rate = 0.01;
+* loss_function = 'RMSE';
+* use_best_model = True;
+* eval_metric = 'RMSE'.
+
 
 ### 3. Resultados
 
 Dada a incerteza existente para afirmar se um modelo de previsão de vendas é satisfatório ou não, foram pensados dois balizadores para comparar os resultados.
 
-1. Assumisse como venda futura a mesma venda realizada no mês anterior e então verifica-se a métrica de precisão
-2. Obtem os números do processo de previsão de vendas atualmente implementado na companhia e então verifica-se a métrica de precisão
+1. Assumisse como venda futura a mesma venda realizada no mês anterior e então verifica-se a acurácia.
+2. Obtem os números do processo de previsão de vendas atualmente implementado na companhia e então verifica-se a acurácia.
 
-Com ambos os balizadores tornou-se possível mensurar a eficiência dos modelos de machine learning propostos para prever a demanda do ponto seguinte.
+Com ambos os balizadores, tornou-se possível mensurar a diferença de acurácia entre os balizadores 1 e 2 versus os modelos de machine learning propostos neste estudo para prever a demanda do ponto seguinte.
 
-Abaixo temos uma tabela resumo dos quatro clusters com os resultados do RMSE das projeções.
+Como métrica de acurácia, escolheu-se o RMSE (Raiz do Erro Quadrático Médio). Quanto menor o RMSE, melhor a previsão.
+
+Dado que o modelo prevê somente um ponto a frente, o RMSE final foi formulado a partir da média dos últimos quatro RMSE. Dessa forma, tenta-se minimizar ocilações pontuais e testa-se de forma mais sólida 
+os modelos e técnicas empregadas para as previsões de vendas. 
+
+Abaixo temos uma tabela resumo dos quatro clusters com seus resultados de RMSE finais.
+
+
+| Clusters | Balizador 1  (M-1 = M) | Balizador 2  (Previsão Empresa) | Modelo  CatBoost |
+|:---:|:---:|:---:|:---:|
+| 1 |  |  |  |
+| 2 |  |  |  |
+| 3 |  |  |  |
+| 4 |  |  |  |
+
+
+
+
 
 
 
