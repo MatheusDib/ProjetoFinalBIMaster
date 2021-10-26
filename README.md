@@ -12,7 +12,13 @@ Trabalho apresentado ao curso [BI MASTER](https://ica.puc-rio.ai/bi-master) como
 
 ### Resumo
 
-<!-- trocar o texto abaixo pelo resumo do trabalho, em português -->
+A análise de séries temporais é fundamental para todas as empresas. Os departamentos de logísticas utilizam-se de técnicas para previsões de vendas afim de 
+atingir seus objetivos centrais de otimização de estoques. O presente estudo tem como objetivo colaborar com o avanço de técnicas para previsões de vendas em indústrias.
+Neste trabalho utilizou-se uma base de dados de uma industria de cosméticos do Brasil com dados desde 2017 de vendas na granularidade de produto e mês.
+A base de dados foi separada em quatro dataframes diferentes (clusters) baseando-se em similiaridade dos produtos de mesmas categorias com alta correlação. Em seguida, 
+criaram-se as features nos dataframes para futura entrada nos modelos preditivos. O modelo de machine learning escolhido para previsão foi o Catboost. O modelo obteve resultados 
+melhores que os balizadores propostos para os clusters 2, 3 e 4 e resultado inferior para o cluster 1.
+
 
 
 ### 1. Introdução
@@ -88,30 +94,29 @@ Com ambos os balizadores, tornou-se possível mensurar a diferença de acurácia
 
 Como métrica de acurácia, escolheu-se o RMSE (Raiz do Erro Quadrático Médio). Quanto menor o RMSE, melhor a previsão.
 
-Dado que o modelo prevê somente um ponto a frente, o RMSE final foi formulado a partir da média dos últimos quatro RMSE. Dessa forma, tenta-se minimizar ocilações pontuais e testa-se de forma mais sólida 
+Dado que o modelo prevê somente um ponto a frente, o RMSE final foi formulado a partir da média dos últimos quatro RMSE de cada cluster.
+Dessa forma, tenta-se minimizar ocilações pontuais e testa-se de forma mais sólida 
 os modelos e técnicas empregadas para as previsões de vendas. 
 
 Abaixo temos uma tabela resumo dos quatro clusters com seus resultados de RMSE finais.
 
-
 | Clusters | Balizador 1  (M-1 = M) | Balizador 2  (Previsão Empresa) | Modelo  CatBoost |
 |:---:|:---:|:---:|:---:|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-
-
-
-
-
-
-
-
+| Cluster 1 | 2.009 | 1.362 | 1.623 |
+| Cluster 2 | 2.689 | 3.076 | 2.605 |
+| Cluster 3 | 395 | 596 | 338 |
+| Cluster 4 | 714 | 609 | 593 |
 
 ### 4. Conclusões
 
+Analisando os resultados, verifica-se que o modelo proposto conseguiu atingir resultados melhores de RMSE para 
+os clusters 2, 3 e 4. Para o cluster 1 o modelo tem resultado inferior ao processo atual de previsão de vendas da empresa.
 
+Interessante analisar também, que para os clusters 2 e 3, a técnica de utilizar o periodo anterior como previsão se mostrou melhor que a atual previsão da empresa, e 
+com resultados bem próximos ao modelo do catboost.
+
+Como sugestão de trabalhos futuros novos modelos de machine learning poderiam ser usados para verificar suas acurácias e também novas features poderiam ser desenvolvidas 
+para incrementar os modelos preditivos.
 
 
 
